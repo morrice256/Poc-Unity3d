@@ -27,18 +27,20 @@ public class PlayerCombatController : MonoBehaviour
     }
 
     private void CheckCombatInput(){
-        if(Input.GetButton("Fire1")){
-            Attack1();
+        if(!isAttacking){
+            if(Input.GetButton("Fire1")){
+                Attack1();
+            }
         }
     }
 
     private void Attack1(){
-        isAttacking = true;        
+        isAttacking = true;
+
     }
 
     public void FinishAttack(){
         isAttacking = false;
-        anim.SetBool("isAttacking", isAttacking);
     }
 
     private void UpdateAnimations(){

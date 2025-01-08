@@ -92,4 +92,14 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos(){
         Gizmos.DrawWireSphere(goundCheck.position, groundCheckRadius); 
     }
+
+    public int GetFacingDirection(){
+        if(isFaceRight){
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+
 }
