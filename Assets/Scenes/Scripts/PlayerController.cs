@@ -59,11 +59,6 @@ public class PlayerController : MonoBehaviour
 
         isWalking = (rb.velocity.x != 0);
 
-        /*if(rb.velocity.x != 0){
-            isWalking = true;
-        } else {
-            isWalking = false;
-        }*/
     }
 
     private void UpdateAnimations(){
