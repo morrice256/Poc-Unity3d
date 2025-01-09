@@ -11,6 +11,9 @@ public class CombatController : MonoBehaviour
     private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
     private float currentHealth, knockbackStart;
 
+    [SerializeField]
+    private GameObject hitParticle;
+
     private PlayerController pc;
     private GameObject goEnemy;
     private Rigidbody2D rbEnemy;
@@ -33,6 +36,7 @@ public class CombatController : MonoBehaviour
     private void Damage(float amount){
         currentHealth -= amount;
         animEnemy.SetTrigger("damage");
+        Instantiate(hitParticle, goEnemy.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
         if(applyKnockback && currentHealth > 0.0f){
             Knockback();
