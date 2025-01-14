@@ -6,13 +6,15 @@ public class PlayerCombatController : MonoBehaviour
 {
 
     [SerializeField]
-    private bool isAttacking;
-    [SerializeField]
     private float attack1Radius, attack1Damage;
     [SerializeField]
     private Transform atttack1HitBoxPos;
     [SerializeField]
     private LayerMask whatIsDamageable;
+
+    private bool isAttacking;
+    private float[] attackDetails = new float[2];
+
     private Animator anim;
 
     void Start()
@@ -49,8 +51,12 @@ public class PlayerCombatController : MonoBehaviour
 
     private void CheckAttackHitEnemy(){
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(atttack1HitBoxPos.position, attack1Radius, whatIsDamageable);
+
+        attackDetails[0] = attack1Damage;
+        attackDetails[1] = transform.position.x;
+
         foreach(Collider2D collider in detectedObjects){
-            collider.transform.parent.SendMessage("Damage", attack1Damage);
+            collider.transform.parent.SendMessage("Damage", attackDetails);
         }
     }
 

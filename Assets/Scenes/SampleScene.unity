@@ -582,7 +582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c878ed50e579e498bce78dc2a7a485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
   attack1Radius: 0.8
   attack1Damage: 10
   atttack1HitBoxPos: {fileID: 1726487422}
@@ -726,7 +725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215906112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.079, y: -0.341, z: 0}
+  m_LocalPosition: {x: 0.079, y: -0.354, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2243,6 +2242,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   knockbackSpeed: {x: 10, y: 5}
+  hitParticle: {fileID: 6518265501958083678, guid: 53a47a3c282d4ea41bb478f141453cd1, type: 3}
+  deathChunkParticle: {fileID: 0}
+  deathBloodParticle: {fileID: 0}
 --- !u!1 &1726487421
 GameObject:
   m_ObjectHideFlags: 0
