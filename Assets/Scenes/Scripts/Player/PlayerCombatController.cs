@@ -16,10 +16,14 @@ public class PlayerCombatController : MonoBehaviour
     private float[] attackDetails = new float[2];
 
     private Animator anim;
+    private PlayerController PC;
+    private PlayerStats PS;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        PC = GetComponent<PlayerController>();
+        PS = GetComponent<PlayerStats>();
     }
     
     void Update()
@@ -58,6 +62,19 @@ public class PlayerCombatController : MonoBehaviour
         foreach(Collider2D collider in detectedObjects){
             collider.transform.parent.SendMessage("Damage", attackDetails);
         }
+    }
+    
+    private void Damage(float[] attackDetails){
+        int direction;
+        
+         if(attackDetails[1] < transform.position.x){
+            direction = 1;
+         } else {
+            direction = -1;
+         }
+
+         PC.Knockback(direction);
+         PS.DecreaseHealth(attackDetails[0]);
     }
 
     private void OnDrawGizmos(){

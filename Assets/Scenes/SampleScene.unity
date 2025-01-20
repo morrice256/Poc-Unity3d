@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58462536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.316496, y: -3.4127429, z: -10.365923}
+  m_LocalPosition: {x: -0.8164965, y: -3.352743, z: -10.365923}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -326,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.316496, y: -3.4127429, z: -10.365923}
+  m_LocalPosition: {x: -0.8164965, y: -3.352743, z: -10.365923}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 591117299}
   - component: {fileID: 591117301}
   - component: {fileID: 591117303}
+  - component: {fileID: 591117304}
   - component: {fileID: 591117298}
   - component: {fileID: 591117297}
   - component: {fileID: 591117302}
@@ -521,7 +522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591117296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.23, y: -3.08, z: 0}
+  m_LocalPosition: {x: -0.73, y: -3.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -542,6 +543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79590dade860144784ab1ce1374130b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBack: 0
+  knockbackDuration: 0.1
+  knockbackSpeed: {x: 10, y: 5}
   movimentSpeed: 8
   jumpForce: 15
   groundCheckRadius: 0.4
@@ -588,6 +592,20 @@ MonoBehaviour:
   whatIsDamageable:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &591117304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591117296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c8c3bff58c5e74ca304fe3cc5be5a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 30
+  currentHealth: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +687,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &694228717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694228718}
+  m_Layer: 7
+  m_Name: TouchDamageCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &694228718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694228717}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.008, y: -0.161, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1636921574}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &908781197
 GameObject:
@@ -5642,6 +5691,7 @@ Transform:
   m_Children:
   - {fileID: 1215906113}
   - {fileID: 945948128}
+  - {fileID: 694228718}
   m_Father: {fileID: 1674054635}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5885,12 +5935,21 @@ MonoBehaviour:
   wallCheckDistance: 0.3
   movementSpeed: 3
   maxHealth: 30
-  knockbackDuration: 0.1
+  knockbackDuration: 0.5
+  lastTouchDamageTime: 0
+  touchDamageCooldown: 0.2
+  touchDamage: 10
+  touchDamageWidth: 0.57
+  touchDamageHeight: 1.62
   groundCheck: {fileID: 1215906113}
   wallCheck: {fileID: 945948128}
+  touchDamageCheck: {fileID: 694228718}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 512
   knockbackSpeed: {x: 10, y: 5}
   hitParticle: {fileID: 6518265501958083678, guid: 53a47a3c282d4ea41bb478f141453cd1, type: 3}
   deathChunkParticle: {fileID: 0}

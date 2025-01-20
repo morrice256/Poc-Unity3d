@@ -5,11 +5,23 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float movimentInputDirection;
+    private float knockbackStartTime;
     private bool isFaceRight = true;
     private bool isWalking;
     private bool isGrounded;
     private bool canJump;
+    private bool isHurt;
+    private bool isDead = false;
 
+    [SerializeField]
+    private bool knockBack;
+
+    [SerializeField]
+    private float knockbackDuration;
+
+    [SerializeField]
+    private Vector2 knockbackSpeed;
+    
     private Rigidbody2D rb;
     private Animator anim;
 
@@ -30,10 +42,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckInput();
-        CheckMovementeDirection();
-        UpdateAnimations();
-        CheckIfCanJump();
+        if(!isDead){
+            CheckInput();
+            CheckMovementeDirection();
+            UpdateAnimations();
+            CheckIfCanJump();
+            CheckKnockback();
+        }
     }
 
     private void FixedUpdate(){
@@ -65,6 +80,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isWalking", isWalking);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetFloat("yVelocity", rb.velocity.y);
+        anim.SetBool("isHurt", knockBack);
     }
 
     private void CheckInput(){
@@ -75,17 +91,36 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ApplyMovement(){
-        rb.velocity = new Vector2(movimentSpeed * movimentInputDirection, rb.velocity.y);
+        if(!knockBack){
+            rb.velocity = new Vector2(movimentSpeed * movimentInputDirection, rb.velocity.y);
+        }
+        CheckKnockback();
     }
 
     private void Flip(){
-        isFaceRight = !isFaceRight;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
+        if(!knockBack){
+            isFaceRight = !isFaceRight;
+            transform.Rotate(0.0f, 180.0f, 0.0f);
+        }
     }
 
     private void Jump(){
-        if(canJump){
+        if(canJump && !knockBack){
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
+    
+    public void Knockback(int direction){        
+         knockBack = true;
+         knockbackStartTime = Time.time;
+         rb.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
+
+    }
+
+    private void CheckKnockback(){
+        if(Time.time >= knockbackStartTime + knockbackDuration && knockBack){
+            knockBack = false;
+            rb.velocity = new Vector2(0.0f, rb.velocity.y);
         }
     }
 
@@ -99,6 +134,12 @@ public class PlayerController : MonoBehaviour
         } else {
             return -1;
         }
+    }
+
+    public void Die(){
+        anim.SetBool("isDead", true);
+        isDead = true;
+        Destroy(gameObject, 10);
     }
 
 
